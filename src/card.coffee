@@ -33,7 +33,7 @@
 
     @collection.bind 'add', (memo) =>
       memoView = new MemoView({model: memo})
-      @$memos.prepend memoView.render().el
+      @$memos.append memoView.render().el
 
   render: ->
     @$el.html @template @model.toJSON()
