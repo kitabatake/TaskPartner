@@ -1,9 +1,10 @@
 $( ->
-
+  #After DOM rendering processing
+  
   appView = new AppView({
     el: $('div.app')
   })
 
-  appView.collection.each (card) ->
+  appView.cards.each (card) ->
     card.memos.fetch()
 )
