@@ -1,0 +1,41 @@
+{
+  "name": "task_partner",
+  "description": "",
+  "authors": [
+    "Tatsuya Kitabatake"
+  ],
+  "license": "ISC",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "jquery": "~2.1.4",
+    "backbone": "~1.2.3",
+    "bootstrap": "~3.3.5"
+  },
+  "exportsOverride": {
+    "jquery": {
+      "js": "dist/jquery.js"
+    },
+    "backbone": {
+      "js": "backbone.js"
+    },
+    "underscore": {
+      "js": "underscore.js"
+    },
+    "bootstrap": {
+      "css": [
+        "dist/css/bootstrap.css",
+        "dist/css/bootstrap-theme.css"
+      ],
+      "js": "dist/js/bootstrap.js",
+      "fonts": "dist/fonts/*"
+    }
+  }
+}

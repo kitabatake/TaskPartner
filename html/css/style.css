@@ -1,0 +1,14 @@
+
+.card {
+  float: left;
+  margin: 0 20px 20px 0;
+  width: 350px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.card-title{
+  font-size: 16px;
+  margin: 6px 0 0 4px;
+}
