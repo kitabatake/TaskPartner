@@ -8,6 +8,7 @@
   <script type="text/javascript" src="lib/jquery/js/jquery.js"></script>
   <script type="text/javascript" src="lib/underscore/js/underscore.js"></script>
   <script type="text/javascript" src="lib/backbone/js/backbone.js"></script>
+  <script type="text/javascript" src="lib/backbone.localStorage/backbone.localStorage.js"></script>
   <script type="text/javascript" src="js/memo.js"></script>
   <script type="text/javascript" src="js/card.js"></script>
   <script type="text/javascript" src="js/index.js"></script>
@@ -17,7 +18,7 @@
 
 <div class='container app'>
 
-  <h2>Today</h2>
+  <div class='date'>Today</div>
 
   <form class="add-card form-inline">
       <input type="text" class="form-control card-title-input" placeholder="input card title">
@@ -35,7 +36,7 @@
   <div  class='card'>
     <div class='card-header clearfix'>
       <span class='card-title'><%= title %></span>
-      <button class="card-delete-btn btn btn-sm btn-warning pull-right">
+      <button class="card-delete-btn btn btn-sm pull-right">
         <span class="glyphicon glyphicon-remove"></span> 
       </button>
     </div>

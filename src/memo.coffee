@@ -1,12 +1,15 @@
 @Memo = Backbone.Model.extend({
   defaults: {
+    card_id: ''
     content: ''
   }
-  sync: ->
 })
 
 @Memos = Backbone.Collection.extend({
-  model: Memo
+  model: Memo,
+  initialize: (models, options) -> 
+    @card = options.card
+    @localStorage =  new Backbone.LocalStorage("TaskPartner-memos-" + @card.id)
 })
 
 @MemoView = Backbone.View.extend({

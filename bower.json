@@ -17,6 +17,7 @@
   "devDependencies": {
     "jquery": "~2.1.4",
     "backbone": "~1.2.3",
+    "backbone.localStorage": "~1.1.16",
     "bootstrap": "~3.3.5"
   },
   "exportsOverride": {

@@ -3,7 +3,10 @@
   defaults: {
     title: ''
   }
-  sync: ->
+  initialize: (attrs) ->
+    @id = _.uniqueId()
+    @memos = new Memos([], {card: this})
+
   validate: (attrs) ->
     
     errors = []
@@ -16,13 +19,15 @@
     if _.isEmpty(errors) then false else errors
 })
 
+
 @Cards = Backbone.Collection.extend({
   model: Card
+  localStorage: new Backbone.LocalStorage("TaskPartner-cards")
 })
+
 
 @CardView = Backbone.View.extend({
   tagName: 'div'
-  collection: new Memos
   events: {
     'click .card-delete-btn': 'deleteCard',
     'click .memo-add-btn': 'addMemo'
@@ -31,7 +36,7 @@
     @template = _.template $('#card-view-template').html()
     @model.on 'destroy', @remove, this
 
-    @collection.bind 'add', (memo) =>
+    @model.memos.bind 'add', (memo) =>
       memoView = new MemoView({model: memo})
       @$memos.append memoView.render().el
 
@@ -47,7 +52,8 @@
 
   addMemo: (e) ->
     e.preventDefault()
-    newMemo = @collection.create({
+    newMemo = @model.memos.create({
+      card_id: @model.get 'id'
       content: @$memoContentInput.val()
     })
 
@@ -56,12 +62,14 @@
 
 })
 
+
+
 @AppView = Backbone.View.extend({
-  collection: new Cards()
   events: {
     'submit .add-card': 'addCard'
   }
   initialize: ->
+    @collection = new Cards()
     @collection.bind 'add', (card) =>
       cardView = new CardView({model: card})
       @$cards.prepend cardView.render().el
@@ -72,6 +80,8 @@
     
     @collection.on 'invalid', (card, errors) =>
       @$error.html errors[0]['message']
+
+    @collection.fetch()
 
   addCard: (e) ->
     e.preventDefault()
