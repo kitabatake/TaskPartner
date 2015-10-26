@@ -22,38 +22,53 @@
 
 @CardView = Backbone.View.extend({
   tagName: 'div'
-  
+  collection: new Memos
   events: {
-    'click .delete-card': 'deleteCard'
+    'click .card-delete-btn': 'deleteCard',
+    'click .memo-add-btn': 'addMemo'
   }
-  
   initialize: ->
-    @template = _.template($('#card-view-template').html())
+    @template = _.template $('#card-view-template').html()
     @model.on 'destroy', @remove, this
 
+    @collection.bind 'add', (memo) =>
+      memoView = new MemoView({model: memo})
+      @$memos.prepend memoView.render().el
+
   render: ->
-    html = @template(this.model.toJSON())
-    @$el.html html
-    return this;
-  
+    @$el.html @template @model.toJSON()
+    @$memos = @$el.find '.memos'
+    @$memoContentInput = @$el.find '.memo-content-input'
+    this
+ 
   deleteCard: (e) ->
     e.preventDefault()
     @model.destroy()
+
+  addMemo: (e) ->
+    e.preventDefault()
+    newMemo = @collection.create({
+      content: @$memoContentInput.val()
+    })
+
+    if newMemo
+      @$memoContentInput.val('')
+
 })
 
 @AppView = Backbone.View.extend({
+  collection: new Cards()
   events: {
     'submit .add-card': 'addCard'
   }
-
   initialize: ->
-    @$title = @$el.find('input.card-title-input')
-    @$cardList = @$el.find('.cards')
-    @$error = @$el.find('.add-card-error')
-    
-    @collection.on 'add', (card) => 
-        newCardView = new CardView {model: card}
-        @$cardList.prepend newCardView.render().el
+    @collection.bind 'add', (card) =>
+      cardView = new CardView({model: card})
+      @$cards.prepend cardView.render().el
+
+    @$title = @$el.find 'input.card-title-input'
+    @$cards = @$el.find '.cards'
+    @$error = @$el.find '.add-card-error'
     
     @collection.on 'invalid', (card, errors) =>
       @$error.html errors[0]['message']
@@ -61,7 +76,7 @@
   addCard: (e) ->
     e.preventDefault()
 
-    newCard = this.collection.create(
+    newCard = @collection.create(
       {title: @$title.val()}
       {validate: true}
     )
@@ -69,6 +84,6 @@
     if newCard
       @$title.val ''
       @$error.html ''
-    
+
 })
 
