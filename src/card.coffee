@@ -2,9 +2,11 @@
 @Card = Backbone.Model.extend({
   defaults: {
     title: ''
+    created: null
   }
   initialize: (attrs) ->
     @set @idAttribute, _.uniqueId()
+    @set 'created', new Date()
     @memos = new Memos([], {card: this})
 
   validate: (attrs) ->
@@ -17,6 +19,11 @@
       }
 
     if _.isEmpty(errors) then false else errors
+
+  displayDate: ->
+    created = @get('created')
+    ( created.getMonth() + 1 ) + '/' + created.getDate()
+
 })
 
 
@@ -41,7 +48,13 @@
       @$memos.append memoView.render().el
 
   render: ->
-    @$el.html @template @model.toJSON()
+    @$el.html @template _.extend(
+      @model.toJSON(),
+      {
+        created: @model.displayDate()
+      }
+    )
+
     @$memos = @$el.find '.memos'
     @$memoContentInput = @$el.find '.memo-content-input'
     this

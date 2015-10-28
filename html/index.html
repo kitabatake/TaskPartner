@@ -36,7 +36,11 @@
 <script type="text/template" id="card-view-template">
   <div  class='card'>
     <div class='card-header clearfix'>
-      <span class='card-title'><%= title %></span>
+      <div class='pull-left'>
+        <span class='card-created'><%= created %></span><br />
+        <span class='card-title'><%= title %></span>
+      </div>
+      
       <button class="card-delete-btn btn btn-sm pull-right">
         <span class="glyphicon glyphicon-remove"></span> 
       </button>

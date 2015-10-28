@@ -1,6 +1,6 @@
 @Memo = Backbone.Model.extend({
   defaults: {
-    card_id: ''
+    card_id: null
     content: ''
   }
 })
