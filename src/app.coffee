@@ -23,7 +23,10 @@
     e.preventDefault()
 
     newCard = @cards.create(
-      {title: @$title.val()}
+      {
+        title: @$title.val()
+        created: moment()
+      }
       {validate: true}
     )
 

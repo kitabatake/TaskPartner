@@ -6,8 +6,10 @@
   }
   initialize: (attrs) ->
     @set @idAttribute, _.uniqueId()
-    @set 'created', new Date()
+    @set 'createdDate', new Date(attrs.created)
     @memos = new Memos([], {card: this})
+
+    console.log this.toJSON()
 
   validate: (attrs) ->
     
@@ -21,8 +23,7 @@
     if _.isEmpty(errors) then false else errors
 
   displayDate: ->
-    created = @get('created')
-    ( created.getMonth() + 1 ) + '/' + created.getDate()
+     @get('created').format('MM / DD')
 
 })
 
