@@ -1,3 +1,5 @@
+moment.locale('ja')
+
 $( ->
   #After DOM rendering processing
   

@@ -1,15 +1,16 @@
 
 @Card = Backbone.Model.extend({
+  url: 'http://localhost:3000/cards'
   defaults: {
     title: ''
-    created: null
+    created: null #Moment object
   }
   initialize: (attrs) ->
-    @set @idAttribute, _.uniqueId()
-    @set 'createdDate', new Date(attrs.created)
-    @memos = new Memos([], {card: this})
 
-    console.log this.toJSON()
+    @url += @id if @id
+    @memos = new Memos([], {card: this})
+    @set 'created', moment(attrs.created_at)
+
 
   validate: (attrs) ->
     
@@ -30,7 +31,9 @@
 
 @Cards = Backbone.Collection.extend({
   model: Card
-  localStorage: new Backbone.LocalStorage("TaskPartner-cards")
+  url: 'http://localhost:3000/cards'
+  parse: (res) ->
+    res
 })
 
 

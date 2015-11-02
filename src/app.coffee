@@ -15,18 +15,24 @@
     @cards.on 'invalid', (card, errors) =>
       @$error.html errors[0]['message']
 
-
     @listenTo Card, 'destroy', @deleteCard
-    @cards.fetch()
+    @cards.fetch {
+      data:{
+        created_at_from: moment().format('YYYY-MM-DD')
+      }
+      success: (collection, res, options) ->
+        console.log res
+        console.log collection
+      error: (a, b, c) ->
+        console.log 'error'
+        console.log b
+    }
 
   addCard: (e) ->
     e.preventDefault()
 
     newCard = @cards.create(
-      {
-        title: @$title.val()
-        created: moment()
-      }
+      {title: @$title.val()}
       {validate: true}
     )
 
