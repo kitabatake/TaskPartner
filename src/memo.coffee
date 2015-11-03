@@ -26,7 +26,9 @@
     @$parentEl = attrs.$parentEl
 
   render: ->
-    @$el.html @template @model.toJSON()
+    @$el.html @template {
+      content: @model.get('content').replace(/[\r\n?]/g, '<br />')
+    }
     @$parentEl.prepend @$el
     this
 })

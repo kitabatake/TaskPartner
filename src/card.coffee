@@ -81,7 +81,6 @@
         model: memo
         $parentEl: @$memos
       }
-      console.log @$memos
       memoView.render()
 
   render: ->

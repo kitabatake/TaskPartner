@@ -13,13 +13,15 @@ Templates.cardView = """
         <h4 class="modal-title"><%= title %></h4>
       </div>
       <div class="modal-body">
-        <div class='memos'>
-        </div>
-
+        
         <div class='card-memo-area'>
           <textarea class="form-control memo-content-input"></textarea>
           <button class="memo-add-btn btn btn-primary btn-sm">Add Memo</button>
         </div>
+
+        <div class='memos'>
+        </div>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="card-delete-btn btn btn-warning">Delete</button>
