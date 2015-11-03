@@ -6,30 +6,20 @@
   padding: 0 0 4px 4px;
 }
 
+.card-outline {
+  background: #eee;
+  padding: 6px 14px;
+  font-size: 18px;
+  border-radius: 10px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.card-outline:hover {
+  background: #ddd;
+}
 
 /* CardView */
-.card {
-  float: left;
-  margin: 0 20px 20px 0;
-  width: 420px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
-
-.card-header {
-  margin-bottom: 12px;
-}
-
-.card-created {
-  color: #777;
-  font-size: 12px;
-}
-
-.card-title {
-  font-size: 16px;
-  margin: 2px 0 0 4px;
-}
 
 .card-memo-area {
   margin: 14px 0 0 0;

@@ -5,8 +5,8 @@
   initialize: ->
     @cards = new Cards()
     @cards.bind 'add', (card) =>
-      cardView = new CardView({model: card})
-      @$cards.prepend cardView.render().el
+      cardOutlineView = new CardOutlineView({model: card})
+      @$cards.prepend cardOutlineView.render().el
 
     @$title = @$el.find 'input.card-title-input'
     @$cards = @$el.find '.cards'
@@ -21,11 +21,7 @@
         created_at_from: moment().format('YYYY-MM-DD')
       }
       success: (collection, res, options) ->
-        console.log res
-        console.log collection
-      error: (a, b, c) ->
-        console.log 'error'
-        console.log b
+      error:  ->
     }
 
   addCard: (e) ->
