@@ -19,7 +19,7 @@
 @MemoView = Backbone.View.extend({
   tagName: 'div'
   initialize: ->
-    @template = _.template $('#memo-view-template').html()
+    @template = _.template Templates.memoView
     @listenTo @model, 'destroy', @remove
 
   render: ->

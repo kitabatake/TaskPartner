@@ -42,7 +42,7 @@
     'click .card-outline': 'openCardView'
   }
   initialize: ->
-    @template = _.template $('#card-outline-view-template').html()
+    @template = _.template Templates.cardOutlineView
     @listenTo @model, 'destroy', @remove
 
   render: ->
@@ -68,7 +68,7 @@
     backdrop: true
   }
   initialize: ->
-    @template = _.template $('#card-view-template').html()
+    @template = _.template Templates.cardView
     @elId = 'card-' + @model.id
     
     @model.memos.bind 'add', (memo) =>
