@@ -8,9 +8,11 @@
 
 .card-outline {
   background: #eee;
+  float: left;
   padding: 6px 14px;
   font-size: 18px;
   border-radius: 10px;
+  margin-right: 16px;
   display: inline-block;
   cursor: pointer;
 }

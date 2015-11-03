@@ -6,7 +6,7 @@ Templates.cardOutlineView = """
 
 Templates.cardView = """
 <div class="card modal" id='card-<%= id %>'>
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="card-close close"><span aria-hidden="true">&times;</span></button>

@@ -33,7 +33,11 @@
 
     newCard = @cards.create(
       {title: @$title.val()}
-      {validate: true}
+      {
+        validate: true
+        success: (model, results) ->
+          model.updateUrl()
+      }
     )
 
     if newCard
@@ -42,6 +46,5 @@
 
   deleteCard: (card) ->
     @cards.remove card
-    console.log @cards.length
     
 })

@@ -7,8 +7,9 @@
   }
   initialize: (attrs) ->
 
-    @url += @id if @id
+    @updateUrl()
     @memos = new Memos([], {card: this})
+    @memos.fetch()
     @set 'created', moment(attrs.created_at)
 
 
@@ -26,6 +27,8 @@
   displayDate: ->
      @get('created').format('MM / DD')
 
+  updateUrl: ->
+    @url += @id if @id and /\/$/.test @url
 })
 
 @Cards = Backbone.Collection.extend({
@@ -96,7 +99,12 @@
     @$memos = @$el.find '.memos'
     @$memoContentInput = @$el.find '.memo-content-input'
 
-    @model.memos.fetch()
+    @model.memos.each (memo) =>
+      memoView = new MemoView {
+        model: memo
+        $parentEl: @$memos
+      }
+      memoView.render()
 
     @$modal.modal(@modalOptions)
     this
@@ -109,6 +117,7 @@
  
   deleteCard: (e) ->
     e.preventDefault()
+    @closeCardView()
     @model.destroy()
 
   addMemo: (e) ->
@@ -120,6 +129,11 @@
 
     if newMemo
       @$memoContentInput.val('')
+      memoView = new MemoView {
+        model: newMemo
+        $parentEl: @$memos
+      }
+      memoView.render()
 
 })
 
