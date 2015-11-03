@@ -6,7 +6,4 @@ $( ->
   appView = new AppView({
     el: $('div.app')
   })
-
-  appView.cards.each (card) ->
-    card.memos.fetch()
 )

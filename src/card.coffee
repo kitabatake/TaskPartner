@@ -28,12 +28,12 @@
 
 })
 
-
 @Cards = Backbone.Collection.extend({
   model: Card
   url: 'http://localhost:3000/cards'
   parse: (res) ->
     res
+
 })
 
 @CardOutlineView = Backbone.View.extend({
@@ -41,20 +41,25 @@
   events: {
     'click .card-outline': 'openCardView'
   }
-  initialize: ->
+  initialize: (attrs) ->
     @template = _.template Templates.cardOutlineView
     @listenTo @model, 'destroy', @remove
+    @$parentEl = attrs.$parentEl
 
   render: ->
     @$el.html @template @model.toJSON()
+    @$parentEl.prepend @$el
     this
  
   openCardView: (e) ->
     e.preventDefault()
 
-    cardView = new CardView {model: @model}
-    $('body').append cardView.render().el
-    $('#card-' + @model.id).modal(cardView.modalOptions)
+    cardView = new CardView {
+      model: @model
+      $parentEl: $('body')
+    }
+    
+    cardView.render()
 })
 
 @CardView = Backbone.View.extend({
@@ -67,13 +72,17 @@
   modalOptions: {
     backdrop: true
   }
-  initialize: ->
+  initialize: (attrs) ->
     @template = _.template Templates.cardView
-    @elId = 'card-' + @model.id
+    @$parentEl = attrs.$parentEl
     
     @model.memos.bind 'add', (memo) =>
-      memoView = new MemoView({model: memo})
-      @$memos.append memoView.render().el
+      memoView = new MemoView {
+        model: memo
+        $parentEl: @$memos
+      }
+      console.log @$memos
+      memoView.render()
 
   render: ->
     @$el.html @template _.extend(
@@ -83,15 +92,21 @@
       }
     )
 
+    @$parentEl.append @$el
+    @$modal = @$el.find "#card-" + @model.id
     @$memos = @$el.find '.memos'
     @$memoContentInput = @$el.find '.memo-content-input'
+
+    @model.memos.fetch()
+
+    @$modal.modal(@modalOptions)
     this
 
   closeCardView: (e) ->
-    $('#' + @elId).on 'hidden.bs.modal', (e) =>
-      $('#' + @elId).remove
+    @$modal.on 'hidden.bs.modal', (e) =>
+      $(@$el).remove
 
-    $('#' + @elId).modal('hide')
+    @$modal.modal('hide')
  
   deleteCard: (e) ->
     e.preventDefault()

@@ -4,9 +4,13 @@
   }
   initialize: ->
     @cards = new Cards()
+
     @cards.bind 'add', (card) =>
-      cardOutlineView = new CardOutlineView({model: card})
-      @$cards.prepend cardOutlineView.render().el
+      cardOutlineView = new CardOutlineView({
+        model: card
+        $parentEl: @$cards
+      })
+      cardOutlineView.render()
 
     @$title = @$el.find 'input.card-title-input'
     @$cards = @$el.find '.cards'

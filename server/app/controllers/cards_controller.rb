@@ -10,8 +10,6 @@ class CardsController < ApplicationController
   def create
     @card = Card.new params.require(:card).permit(:title)
 
-    p params
-
     if @card.save
       render json: {
         status: :success,
@@ -27,7 +25,7 @@ class CardsController < ApplicationController
 
   def show
     @card = Card.find params[:id]
-    render json:@card
+    render json: @card
   end
 
   def destroy

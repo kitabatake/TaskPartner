@@ -1,28 +1,32 @@
 @Memo = Backbone.Model.extend({
+  url: 'http://localhost:3000/cards/'
   defaults: {
     card_id: null
     content: ''
   }
+  initialize: (attrs) ->
+    @url += attrs.card_id + '/memos/'
+    @url += @id if @id
 })
 
 @Memos = Backbone.Collection.extend({
   model: Memo,
-  initialize: (models, options) -> 
-    @card = options.card
-    @localStorage =  new Backbone.LocalStorage("TaskPartner-memos-" + @card.id)
+  url: 'http://localhost:3000/cards/'
+  parse: (res) ->
+    res
 
-    @card.on 'destroy', (card) =>
-      while memo = @first()
-        memo.destroy()
+  initialize: (models, options) ->
+    @url += options.card.id + '/memos'
 })
 
 @MemoView = Backbone.View.extend({
   tagName: 'div'
-  initialize: ->
+  initialize: (attrs) ->
     @template = _.template Templates.memoView
-    @listenTo @model, 'destroy', @remove
+    @$parentEl = attrs.$parentEl
 
   render: ->
     @$el.html @template @model.toJSON()
+    @$parentEl.prepend @$el
     this
 })
