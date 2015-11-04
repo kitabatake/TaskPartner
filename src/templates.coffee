@@ -14,6 +14,16 @@ Templates.cardView = """
       </div>
       <div class="modal-body">
         
+        <div class='description-view-area clearfix'>
+          <div class='card-description markdown-body'><%= descriptionMarked %></div>
+          <button class="card-description-edit-btn btn btn-primary btn-sm">Edit Description</button>
+        </div>
+
+        <div class='description-edit-area clearfix' style='display: none;'>
+          <textarea class="form-control card-description-input"><%= description %></textarea>
+          <button class="card-description-save-btn btn btn-primary btn-sm">Save Description</button>
+        </div>
+
         <div class='card-memo-area'>
           <textarea class="form-control memo-content-input"></textarea>
           <button class="memo-add-btn btn btn-primary btn-sm">Add Memo</button>

@@ -3,6 +3,7 @@
   url: 'http://localhost:3000/cards/'
   defaults: {
     title: ''
+    description: ''
     created: null #Moment object
   }
   initialize: (attrs) ->
@@ -71,6 +72,8 @@
     'click .card-close': 'closeCardView'
     'click .card-delete-btn': 'deleteCard'
     'click .memo-add-btn': 'addMemo'
+    'click .card-description-edit-btn': 'editDescription'
+    'click .card-description-save-btn': 'saveDescription'
   }
   modalOptions: {
     backdrop: true
@@ -91,6 +94,7 @@
       @model.toJSON(),
       {
         created: @model.displayDate()
+        descriptionMarked: marked(@model.get('description'))
       }
     )
 
@@ -98,6 +102,11 @@
     @$modal = @$el.find "#card-" + @model.id
     @$memos = @$el.find '.memos'
     @$memoContentInput = @$el.find '.memo-content-input'
+
+    @$descriptionEditArea = @$el.find '.description-edit-area'
+    @$descriptionViewArea = @$el.find '.description-view-area'
+
+    @$descriptionEditArea.hide()
 
     @model.memos.each (memo) =>
       memoView = new MemoView {
@@ -134,6 +143,22 @@
         $parentEl: @$memos
       }
       memoView.render()
+
+  editDescription: (e) ->
+    e.preventDefault()
+    @toggleDescriptionArea()
+
+  saveDescription: (e) ->
+    e.preventDefault()
+
+    description = @$el.find('.card-description-input').val()
+    @model.save {description: description}
+    @$descriptionViewArea.find('card-description').html marked(description)
+    @toggleDescriptionArea()
+
+  toggleDescriptionArea: ->
+    @$descriptionViewArea.toggle()
+    @$descriptionEditArea.toggle()
 
 })
 

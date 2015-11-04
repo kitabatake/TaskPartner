@@ -28,6 +28,22 @@ class CardsController < ApplicationController
     render json: @card
   end
 
+  def update
+    @card = Card.find params[:id]
+    
+    if @card.update params.require(:card).permit(:title, :description)
+      render json: {
+        status: :success,
+        id: @card.id
+      }
+    else
+      render json: {
+        status: error,
+        erros: @card.errors
+      }
+    end
+  end
+
   def destroy
     card = Card.find params[:id]
     card.destroy

@@ -23,15 +23,34 @@
 
 /* CardView */
 
+.description-view-area {
+}
+
+.description-edit-area {
+}
+
+.card-description-edit-btn, .card-description-save-btn {
+  margin-top: 10px;
+  text-align: center;
+  float: right;
+}
+
+.card-description-input {
+  min-height: 200px;
+}
+
+.card-description {
+  padding: 20px;
+}
+
 .card-memo-area {
-  margin: 14px 0 30px 0;
+  margin: 40px 0 30px 0;
   text-align: center;
 }
 
 .memo-add-btn {
   margin-top: 10px;
 }
-
 
 /* MemoView */
 .memo {
