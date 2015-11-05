@@ -90,11 +90,15 @@
       memoView.render()
 
   render: ->
+
+    descriptionMarked = ''
+    descriptionMarked = marked(@model.get('description')) if @model.get('description')
+
     @$el.html @template _.extend(
       @model.toJSON(),
       {
         created: @model.displayDate()
-        descriptionMarked: marked(@model.get('description'))
+        descriptionMarked: descriptionMarked
       }
     )
 

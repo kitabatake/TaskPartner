@@ -21,9 +21,7 @@
 
     @listenTo Card, 'destroy', @deleteCard
     @cards.fetch {
-      data:{
-        created_at_from: moment().format('YYYY-MM-DD')
-      }
+      data:{}
       success: (collection, res, options) ->
       error:  ->
     }
