@@ -28,9 +28,6 @@
 
     if _.isEmpty(errors) then false else errors
 
-  displayDate: ->
-     @get('created').format('MM / DD')
-
   updateUrl: ->
     @url += @id if @id and /\/$/.test @url
 })
@@ -91,15 +88,17 @@
     descriptionMarked = ''
     descriptionMarked = marked(@model.get('description')) if @model.get('description')
 
-    @$el.html @template _.extend(
-      @model.toJSON(),
-      {
-        created: @model.displayDate()
-        descriptionMarked: descriptionMarked
-      }
-    )
+    @$el.html @template _.extend @model.toJSON()
 
-    @$parentEl.append @$el
+    if !@$el.parent().length
+      @$parentEl.append @$el
+      @initElements();
+      @renderRelations()
+      @$modal.modal(@modalOptions)
+    
+    return this
+
+  initElements: ->
     @$modal = @$el.find "#card-" + @model.id
     @$memos = @$el.find '.memos'
     @$memoContentInput = @$el.find '.memo-content-input'
@@ -109,8 +108,10 @@
 
     @$descriptionEditArea = @$el.find '.description-edit-area'
     @$descriptionViewArea = @$el.find '.description-view-area'
-
     @$descriptionEditArea.hide()
+
+
+  renderRelations: ->
 
     @model.memos.each (memo) =>
       memoView = new MemoView {
@@ -126,8 +127,6 @@
       }
       todoView.render()
 
-    @$modal.modal(@modalOptions)
-    this
 
   closeCardView: (e) ->
     @$modal.on 'hidden.bs.modal', (e) =>

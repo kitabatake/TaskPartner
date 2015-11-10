@@ -15,7 +15,11 @@ Templates.cardView = """
       <div class="modal-body">
         
         <div class='description-view-area clearfix'>
-          <div class='card-description markdown-body'><%= descriptionMarked %></div>
+          <div class='card-description markdown-body'>
+            <% if (description) { %>
+              <%= marked(description) %>
+            <% } %>
+          </div>
           <button class="card-description-edit-btn btn btn-primary btn-sm">Edit Description</button>
         </div>
 
