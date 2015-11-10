@@ -11,6 +11,9 @@
     @updateUrl()
     @memos = new Memos([], {card: this})
     @memos.fetch()
+
+    @todos = new Todos([], {card: this})
+    @todos.fetch()
     @set 'created', moment(attrs.created_at)
 
 
@@ -72,6 +75,7 @@
     'click .card-close': 'closeCardView'
     'click .card-delete-btn': 'deleteCard'
     'click .memo-add-btn': 'addMemo'
+    'click .todo-add-btn': 'addTodo'
     'click .card-description-edit-btn': 'editDescription'
     'click .card-description-save-btn': 'saveDescription'
   }
@@ -81,13 +85,6 @@
   initialize: (attrs) ->
     @template = _.template Templates.cardView
     @$parentEl = attrs.$parentEl
-    
-    @model.memos.bind 'add', (memo) =>
-      memoView = new MemoView {
-        model: memo
-        $parentEl: @$memos
-      }
-      memoView.render()
 
   render: ->
 
@@ -107,6 +104,9 @@
     @$memos = @$el.find '.memos'
     @$memoContentInput = @$el.find '.memo-content-input'
 
+    @$todos = @$el.find '.todos'
+    @$todoContentInput = @$el.find '.todo-content-input'
+
     @$descriptionEditArea = @$el.find '.description-edit-area'
     @$descriptionViewArea = @$el.find '.description-view-area'
 
@@ -118,6 +118,13 @@
         $parentEl: @$memos
       }
       memoView.render()
+
+    @model.todos.each (todo) =>
+      todoView = new TodoView {
+        model: todo
+        $parentEl: @$todos
+      }
+      todoView.render()
 
     @$modal.modal(@modalOptions)
     this
@@ -148,6 +155,21 @@
       }
       memoView.render()
 
+  addTodo: (e) ->
+    e.preventDefault()
+    newTodo = @model.todos.create({
+      card_id: @model.get 'id'
+      content: @$todoContentInput.val()
+    })
+
+    if newTodo
+      @$todoContentInput.val('')
+      todoView = new TodoView {
+        model: newTodo
+        $parentEl: @$todos
+      }
+      todoView.render()
+
   editDescription: (e) ->
     e.preventDefault()
     @toggleDescriptionArea()
@@ -157,7 +179,7 @@
 
     description = @$el.find('.card-description-input').val()
     @model.save {description: description}
-    @$descriptionViewArea.find('card-description').html marked(description)
+    @$descriptionViewArea.find('.card-description').html marked(description)
     @toggleDescriptionArea()
 
   toggleDescriptionArea: ->

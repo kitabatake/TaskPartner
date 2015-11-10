@@ -24,12 +24,29 @@ Templates.cardView = """
           <button class="card-description-save-btn btn btn-primary btn-sm">Save Description</button>
         </div>
 
-        <div class='card-memo-area'>
-          <textarea class="form-control memo-content-input"></textarea>
-          <button class="memo-add-btn btn btn-primary btn-sm">Add Memo</button>
-        </div>
+        <div class='row' style='margin-top: 30px; padding: 20px 0 20px; background: #eee;'>
+          <div class='col-md-5'>
+            <div class='card-todo-area'>
+              <div class='form-inline' style='margin-bottom: 20px;'>
+                <input class="form-control todo-content-input" />
+                <button class="todo-add-btn btn btn-primary btn-sm">Add Todo</button>
+              </div>
 
-        <div class='memos'>
+              <div class='todos'>
+              </div>
+            </div>
+          </div>
+
+          <div class='col-md-7'>
+            <div class='card-memo-area'>
+              <textarea class="form-control memo-content-input"></textarea>
+              <div style='text-align: center; margin-bottom: 20px;'>
+                <button class="memo-add-btn btn btn-primary btn-sm">Add Memo</button>
+              </div>
+              <div class='memos'>
+              </div>
+            </div>
+          </div>
         </div>
 
       </div>
@@ -44,6 +61,14 @@ Templates.cardView = """
 
 Templates.memoView = """
 <div class='memo'>
+  <div class='memo-date'><%= created.fromNow() %></div>
   <div class='memo-content'><%= content %></div>
+</div>
+"""
+
+Templates.todoView = """
+<div class='todo'>
+  <input class="toggle toggle-todo" type="checkbox" <%= done ? 'checked="checked"' : '' %> />
+  <label class='todo-content'><%= content %></label>
 </div>
 """

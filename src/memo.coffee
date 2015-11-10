@@ -3,10 +3,13 @@
   defaults: {
     card_id: null
     content: ''
+    created: null #Moment object
   }
   initialize: (attrs) ->
     @url += attrs.card_id + '/memos/'
     @url += @id if @id
+    @set 'created', moment(attrs.created_at)
+
 })
 
 @Memos = Backbone.Collection.extend({
@@ -26,9 +29,10 @@
     @$parentEl = attrs.$parentEl
 
   render: ->
-    @$el.html @template {
-      content: @model.get('content').replace(/[\r\n?]/g, '<br />')
-    }
+    @$el.html @template _.extend(
+      @model.toJSON()
+      {content: @model.get('content').replace(/[\r\n?]/g, '<br />')}
+    )
     @$parentEl.prepend @$el
     this
 })
