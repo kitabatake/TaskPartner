@@ -32,7 +32,7 @@
     'click .toggle-todo' : 'toggleDone',
   }
   initialize: (attrs) ->
-    @template = _.template Templates.todoView
+    @template = _.template $('#todo-view-template').html()
     @$parentEl = attrs.$parentEl
 
     @listenTo(@model, 'change', @render)
@@ -50,6 +50,5 @@
     this
 
   toggleDone: ->
-    console.log "hoge"
     @model.toggle()
 })

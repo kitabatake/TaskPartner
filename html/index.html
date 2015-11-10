@@ -12,7 +12,6 @@
   <script type="text/javascript" src="lib/bootstrap/js/bootstrap.js"></script>
   <script type="text/javascript" src="lib/moment/moment.js"></script>
   <script type="text/javascript" src="lib/marked/marked.js"></script>
-  <script type="text/javascript" src="js/templates.js"></script>
   <script type="text/javascript" src="js/memo.js"></script>
   <script type="text/javascript" src="js/todo.js"></script>
   <script type="text/javascript" src="js/card.js"></script>
@@ -34,6 +33,93 @@
   <div class='cards clearfix'></div>
 
 </div>
+
+<script type="text/template" id="card-outline-view-template">
+<div  class='card-outline'><%= title %></div>
+</script>
+
+<script type="text/template" id="card-view-template">
+<div class="card modal" id='card-<%= id %>'>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="card-close close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title"><%= title %></h4>
+      </div>
+      <div class="modal-body">
+        
+        <div class='description-view-area clearfix'>
+          <div class='card-description markdown-body'>
+            <% if (description) { %>
+              <%= marked(description) %>
+            <% } %>
+          </div>
+          <button class="card-description-edit-btn btn btn-info btn-sm">Edit Description</button>
+        </div>
+
+        <div class='description-edit-area clearfix' style='display: none;'>
+          <textarea class="form-control card-description-input"><%= description %></textarea>
+          <button class="card-description-save-btn btn btn-primary btn-sm">Save Description</button>
+        </div>
+
+        <div class='row' style='margin-top: 20px; padding: 20px 0 20px; background: #eee;'>
+          <div class='col-md-5'>
+            <div class='card-todo-area'>
+              <div class='form-inline' style='margin-bottom: 20px;'>
+                <input class="form-control todo-content-input" />
+                <button class="todo-add-btn btn btn-primary btn-sm">Add Todo</button>
+              </div>
+
+              <div class='todos'>
+              </div>
+            </div>
+          </div>
+
+          <div class='col-md-7'>
+            <div class='card-memo-area'>
+              <textarea class="form-control memo-content-input"></textarea>
+              <div style='text-align: center; margin-bottom: 20px;'>
+                <button class="memo-add-btn btn btn-primary btn-sm">Add Memo</button>
+              </div>
+              <div class='memos'>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="card-delete-btn btn btn-warning">Delete</button>
+        <button type="button" class="card-close btn btn-default">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+</script>
+
+<script type="text/template" id="memo-view-display-template">
+<div class='memo'>
+  <div class='memo-date'><%= created.fromNow() %></div>
+  <div class='memo-content'><%= content %></div>
+</div>
+</script>
+
+<script type="text/template" id="memo-view-edit-template">
+<div class='memo'>
+  <div class='memo-date'><%= created.fromNow() %></div>
+  <textarea class='form-control memo-content-edit'><%= content %></textarea>
+  <div style='margin-top: 10px; text-align: right;'>
+    <button class="memo-edit-btn btn btn-info btn-sm">Save</button>
+    </div>
+</div>
+</script>
+
+<script type="text/template" id="todo-view-template">
+<div class='todo'>
+  <input class="toggle toggle-todo" type="checkbox" <%= done ? 'checked="checked"' : '' %> />
+  <label class='todo-content'><%= content %></label>
+</div>
+</script>
 
 </body>
 </html>

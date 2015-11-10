@@ -24,8 +24,13 @@
 
 @MemoView = Backbone.View.extend({
   tagName: 'div'
+  events: {
+    'dblclick .memo-content' : 'changeEditMode',
+    'click .memo-edit-btn' : 'editMemo',
+  }
+
   initialize: (attrs) ->
-    @template = _.template Templates.memoView
+    @template = _.template $('#memo-view-display-template').html()
     @$parentEl = attrs.$parentEl
 
   render: ->
@@ -35,4 +40,17 @@
     )
     @$parentEl.prepend @$el
     this
+
+  changeEditMode: ->
+    @template = _.template $('#memo-view-edit-template').html()
+    @render()
+
+  editMemo: ->
+    console.log @$el
+    console.log @$el.find('.memo-content-edit').val()
+    @model.save({
+      content: @$el.find('.memo-content-edit').val()
+    })
+    @template = _.template $('#memo-view-display-template').html()
+    @render()
 })

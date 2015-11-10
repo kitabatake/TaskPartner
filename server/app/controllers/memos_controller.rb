@@ -28,6 +28,22 @@ class MemosController < ApplicationController
     render json: @memo
   end
 
+  def update
+    @memo = Memo.find params[:id]
+    
+    if @memo.update params.require(:memo).permit(:content)
+      render json: {
+        status: :success,
+        id: @memo.id
+      }
+    else
+      render json: {
+        status: error,
+        erros: @memo.errors
+      }
+    end
+  end
+
   def destroy
     memo = Memo.find params[:id]
     memo.destroy

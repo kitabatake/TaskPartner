@@ -46,7 +46,7 @@
     'click .card-outline': 'openCardView'
   }
   initialize: (attrs) ->
-    @template = _.template Templates.cardOutlineView
+    @template = _.template $('#card-outline-view-template').html()
     @listenTo @model, 'destroy', @remove
     @$parentEl = attrs.$parentEl
 
@@ -80,7 +80,7 @@
     backdrop: true
   }
   initialize: (attrs) ->
-    @template = _.template Templates.cardView
+    @template = _.template $('#card-view-template').html()
     @$parentEl = attrs.$parentEl
 
   render: ->
