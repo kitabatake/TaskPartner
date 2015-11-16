@@ -46,8 +46,6 @@
     @render()
 
   editMemo: ->
-    console.log @$el
-    console.log @$el.find('.memo-content-edit').val()
     @model.save({
       content: @$el.find('.memo-content-edit').val()
     })

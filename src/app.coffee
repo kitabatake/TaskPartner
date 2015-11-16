@@ -1,35 +1,30 @@
 @AppView = Backbone.View.extend({
   events: {
-    'submit .add-card': 'addCard'
+    'click .add-card-group-btn': 'addCardGroup'
   }
   initialize: ->
-    @cards = new Cards()
+    @cardGroups = new CardGroups()
 
-    @cards.bind 'add', (card) =>
-      cardOutlineView = new CardOutlineView({
-        model: card
+    @cardGroups.bind 'add', (cardGroup) =>
+      cardGroupView = new CardGroupView({
+        model: cardGroup
         $parentEl: @$cards
       })
-      cardOutlineView.render()
+      cardGroupView.render()
 
-    @$title = @$el.find 'input.card-title-input'
-    @$cards = @$el.find '.cards'
-    @$error = @$el.find '.add-card-error'
-    
-    @cards.on 'invalid', (card, errors) =>
-      @$error.html errors[0]['message']
+    @$title = @$el.find 'input.card-group-title-input'
+    @$cards = @$el.find '.card-groups'
 
-    @listenTo Card, 'destroy', @deleteCard
-    @cards.fetch {
+    @cardGroups.fetch {
       data:{}
       success: (collection, res, options) ->
       error:  ->
     }
 
-  addCard: (e) ->
+  addCardGroup: (e) ->
     e.preventDefault()
 
-    newCard = @cards.create(
+    cardGroup = @cardGroups.create(
       {title: @$title.val()}
       {
         validate: true
@@ -38,11 +33,7 @@
       }
     )
 
-    if newCard
+    if cardGroup
       @$title.val ''
-      @$error.html ''
-
-  deleteCard: (card) ->
-    @cards.remove card
     
 })

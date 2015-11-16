@@ -4,11 +4,12 @@ class CardsController < ApplicationController
 
   def index
     @cards = Card.where get_conditions params
+    p @cards
     render json: @cards
   end
 
   def create
-    @card = Card.new params.require(:card).permit(:title)
+    @card = Card.new params.require(:card).permit(:title, :card_group_id)
 
     if @card.save
       render json: {
@@ -58,8 +59,10 @@ class CardsController < ApplicationController
 
     def get_conditions (params)
 
-      p params
       conditions = []
+      if params['card_group_id'].present?
+        conditions.push "card_group_id = #{params['card_group_id']}"
+      end
       if params['created_at_from'].present?
         conditions.push "DATE(created_at) >= '" + Date.parse(params['created_at_from']).to_s + "'"
       end

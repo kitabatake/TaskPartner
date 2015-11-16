@@ -141,30 +141,30 @@
 
   addMemo: (e) ->
     e.preventDefault()
-    newMemo = @model.memos.create({
+    memo = @model.memos.create({
       card_id: @model.get 'id'
       content: @$memoContentInput.val()
     })
 
-    if newMemo
+    if memo
       @$memoContentInput.val('')
       memoView = new MemoView {
-        model: newMemo
+        model: memo
         $parentEl: @$memos
       }
       memoView.render()
 
   addTodo: (e) ->
     e.preventDefault()
-    newTodo = @model.todos.create({
+    todo = @model.todos.create({
       card_id: @model.get 'id'
       content: @$todoContentInput.val()
     })
 
-    if newTodo
+    if todo
       @$todoContentInput.val('')
       todoView = new TodoView {
-        model: newTodo
+        model: todo
         $parentEl: @$todos
       }
       todoView.render()
