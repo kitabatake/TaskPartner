@@ -30,7 +30,7 @@
   }
 
   initialize: (attrs) ->
-    @template = _.template $('#memo-view-display-template').html()
+    @template = _.template $('#memo-view-template').html()
     @$parentEl = attrs.$parentEl
 
   render: ->
@@ -39,16 +39,19 @@
       {content: @model.get('content').replace(/[\r\n?]/g, '<br />')}
     )
     @$parentEl.prepend @$el
+    @$memoContent = @$el.find '.memo-content'
+    @$editArea = @$el.find '.memo-content-edit-area'
     this
 
   changeEditMode: ->
-    @template = _.template $('#memo-view-edit-template').html()
-    @render()
+    @$memoContent.hide()
+    @$editArea.show()
 
   editMemo: ->
+    memoContent = @$el.find('.memo-content-edit-input').val()
     @model.save({
-      content: @$el.find('.memo-content-edit').val()
+      content: memoContent
     })
-    @template = _.template $('#memo-view-display-template').html()
-    @render()
+    @$memoContent.html(memoContent).show()
+    @$editArea.hide()
 })

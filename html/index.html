@@ -142,20 +142,17 @@
 </div><!-- /.modal -->
 </script>
 
-<script type="text/template" id="memo-view-display-template">
+<script type="text/template" id="memo-view-template">
 <div class='memo'>
   <div class='memo-date'><%= created.fromNow() %></div>
   <div class='memo-content'><%= content %></div>
-</div>
-</script>
-
-<script type="text/template" id="memo-view-edit-template">
-<div class='memo'>
-  <div class='memo-date'><%= created.fromNow() %></div>
-  <textarea class='form-control memo-content-edit'><%= content %></textarea>
-  <div style='margin-top: 10px; text-align: right;'>
-    <button class="memo-edit-btn btn btn-info btn-sm">Save</button>
+  <div class='memo-content-edit-area' style='display: none;'>
+    <textarea class='form-control memo-content-edit-input'><%= content %></textarea>
+      <div style='margin-top: 10px; text-align: right;'>
+        <button class="memo-edit-btn btn btn-info btn-sm">Save</button>
+        </div>
     </div>
+  </div>
 </div>
 </script>
 
