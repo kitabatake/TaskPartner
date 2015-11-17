@@ -26,7 +26,8 @@
   tagName: 'div'
   events: {
     'dblclick .memo-content' : 'changeEditMode',
-    'click .memo-edit-btn' : 'editMemo',
+    'click .memo-edit-btn' : 'editMemo'
+    'click .memo-delete-btn' : 'deleteMemo'
   }
 
   initialize: (attrs) ->
@@ -54,4 +55,8 @@
     })
     @$memoContent.html(memoContent).show()
     @$editArea.hide()
+
+  deleteMemo: ->
+    @model.destroy()
+    @$el.remove()
 })

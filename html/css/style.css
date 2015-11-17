@@ -1,9 +1,9 @@
+/* ---------------------------------- */
+/* Common styles */
+/* ---------------------------------- */
+
 label {
   font-weight: normal;
-}
-
-.modal-body {
-  padding-bottom: 0;
 }
 
 h1 {
@@ -14,18 +14,25 @@ h1 {
   padding: 0 0 4px 4px;
 }
 
-.card-group {
-  width: 270px;
-  float: left;
-  margin-right: 20px;
-}
-
 h2 {
   border-bottom: 1px solid #eee;
   color: #777;
   font-size: 21px;
   margin: 30px 0 14px 0;
   padding: 0 0 4px 4px;
+}
+
+.btn-options {
+  text-align: right;
+}
+.btn-options button {
+  margin-left: 10px;
+}
+
+.card-group {
+  width: 270px;
+  float: left;
+  margin-right: 20px;
 }
 
 .card-outline {
@@ -44,7 +51,13 @@ h2 {
   background: #ddd;
 }
 
-/* CardView */
+
+/* ---------------------------------- */
+/* Card View styles */
+/* ---------------------------------- */
+.modal-body {
+  padding-bottom: 0;
+}
 
 .card-title {
   font-size: 20px;
@@ -90,7 +103,11 @@ h2 {
 .card-todo-area .todo-content-input {
   width: 250px;
 }
-/* MemoView */
+
+
+/* ---------------------------------- */
+/* Memo View styles */
+/* ---------------------------------- */
 .memo {
   padding: 10px;
   background: #e7e7e7;
@@ -105,7 +122,9 @@ h2 {
 }
 
 
-/* TodoView */
+/* ---------------------------------- */
+/* Todo View styles */
+/* ---------------------------------- */
 .todo {
   padding: 10px;
   border-bottom: 1px solid #ddd;

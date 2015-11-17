@@ -29,7 +29,10 @@
 @TodoView = Backbone.View.extend({
   tagName: 'div'
   events: {
-    'click .toggle-todo' : 'toggleDone',
+    'click .toggle-todo': 'toggleDone'
+    'dblclick .todo-content': 'changeEditMode'
+    'click .todo-edit-btn': 'editTodo'
+    'click .todo-delete-btn': 'deleteTodo' 
   }
   initialize: (attrs) ->
     @template = _.template $('#todo-view-template').html()
@@ -46,9 +49,30 @@
 
     if !@$el.parent().length
       @$parentEl.prepend @$el
+      @$displayArea = @$el.find '.todo-display-area'
+      @$editArea = @$el.find '.todo-edit-area'
 
     this
 
   toggleDone: ->
     @model.toggle()
+
+  changeEditMode: (e) ->
+    e.preventDefault()
+    @$displayArea.hide()
+    @$editArea.show()
+
+  editTodo: ->
+    todoContent = @$el.find('.todo-content-edit-input').val()
+    @model.save({
+      content: todoContent
+    })
+    @$el.find('.todo-content').html(todoContent)
+    @$displayArea.show()
+    @$editArea.hide()
+
+  deleteTodo: ->
+    @model.destroy()
+    @$el.remove()
+
 })
