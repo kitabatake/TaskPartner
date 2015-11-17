@@ -46,6 +46,18 @@ h2 {
 
 /* CardView */
 
+.card-title {
+  font-size: 20px;
+}
+.card-title, .card-title-edit-area {
+  float:left;
+  width: 90%;
+}
+
+.card-title-edit-area .card-title-edit-input {
+  width: 90%;
+}
+
 .description-view-area {
 }
 

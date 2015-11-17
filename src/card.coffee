@@ -75,6 +75,8 @@
     'click .todo-add-btn': 'addTodo'
     'click .card-description-edit-btn': 'editDescription'
     'click .card-description-save-btn': 'saveDescription'
+    'dblclick .card-title': 'changeCartTitleEditMode'
+    'click .card-title-edit-btn': 'editCardTitle' 
   }
   modalOptions: {
     backdrop: true
@@ -110,6 +112,8 @@
     @$descriptionViewArea = @$el.find '.description-view-area'
     @$descriptionEditArea.hide()
 
+    @$cardTitle = @$el.find '.card-title'
+    @$cardTitleEditArea = @$el.find '.card-title-edit-area'
 
   renderRelations: ->
 
@@ -185,6 +189,16 @@
     @$descriptionViewArea.toggle()
     @$descriptionEditArea.toggle()
 
+  changeCartTitleEditMode: ->
+    @$cardTitle.hide()
+    @$cardTitleEditArea.show()
+
+  editCardTitle: (e) ->
+    e.preventDefault()
+    title = @$el.find('.card-title-edit-input').val()
+    @model.save {title: title}
+    @$cardTitle.html(title).show()
+    @$cardTitleEditArea.hide()
 })
 
 

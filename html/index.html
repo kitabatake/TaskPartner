@@ -81,9 +81,15 @@
 <div class="card modal" id='card-<%= id %>'>
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header clearfix">
+        
+        <div class="card-title"><%= title %></div>
+        <div class="card-title-edit-area form-inline" style='display: none;'>
+          <input class="card-title-edit-input form-control" value="<%= title %>" />
+          <button type="button" class="card-title-edit-btn btn btn-info btn-sm">Save</button>
+        </div>
         <button type="button" class="card-close close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title"><%= title %></h4>
+
       </div>
       <div class="modal-body">
         
