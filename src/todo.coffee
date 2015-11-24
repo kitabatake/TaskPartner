@@ -1,44 +1,43 @@
 @Todo = Backbone.Model.extend({
-  url: 'http://localhost:3000/cards/'
   defaults: {
     card_id: null
     done: false
     content: ''
   }
+
+  url: ->
+    url = 'http://localhost:3000/cards/' + @get('card_id') + '/todos/'
+    url += @id if @id
+    url
+
   initialize: (attrs) ->
-    @url += attrs.card_id + '/todos/'
-    @url += @id if @id
 
   toggle: ->
     @save({
       done: !@get('done')
     })
-
 })
 
 @Todos = Backbone.Collection.extend({
   model: Todo,
-  url: 'http://localhost:3000/cards/'
-  parse: (res) ->
-    res
+  url: ->
+    'http://localhost:3000/cards/' + @card.id + '/todos'
 
   initialize: (models, options) ->
-    @url += options.card.id + '/todos'
+    @card = options.card
 })
 
 @TodoView = Backbone.View.extend({
   tagName: 'div'
   events: {
     'click .toggle-todo': 'toggleDone'
-    'dblclick .todo-content': 'changeEditMode'
+    'click .todo-content': 'changeEditMode'
     'click .todo-edit-btn': 'editTodo'
     'click .todo-delete-btn': 'deleteTodo' 
   }
   initialize: (attrs) ->
     @template = _.template $('#todo-view-template').html()
     @$parentEl = attrs.$parentEl
-
-    @listenTo(@model, 'change', @render)
 
   render: ->
 

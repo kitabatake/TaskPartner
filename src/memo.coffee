@@ -1,25 +1,26 @@
 @Memo = Backbone.Model.extend({
-  url: 'http://localhost:3000/cards/'
   defaults: {
     card_id: null
     content: ''
     created: null #Moment object
   }
-  initialize: (attrs) ->
-    @url += attrs.card_id + '/memos/'
-    @url += @id if @id
-    @set 'created', moment(attrs.created_at)
 
+  url: ->
+    url = 'http://localhost:3000/cards/' + @get('card_id') + '/memos/'
+    url += @id if @id
+    url
+
+  initialize: (attrs) ->
+    @set 'created', moment(attrs.created_at)
 })
 
 @Memos = Backbone.Collection.extend({
   model: Memo,
-  url: 'http://localhost:3000/cards/'
-  parse: (res) ->
-    res
+  url: ->
+    'http://localhost:3000/cards/' + @card.id + '/memos/'
 
   initialize: (models, options) ->
-    @url += options.card.id + '/memos'
+    @card = options.card
 })
 
 @MemoView = Backbone.View.extend({

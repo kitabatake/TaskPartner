@@ -1,14 +1,15 @@
 
 @Card = Backbone.Model.extend({
-  url: 'http://localhost:3000/cards/'
   defaults: {
     title: ''
     description: ''
     created: null #Moment object
   }
-  initialize: (attrs) ->
+  url: ->
+    url = 'http://localhost:3000/cards/'
+    url += @id if @id
 
-    @updateUrl()
+  initialize: (attrs) ->
     @memos = new Memos([], {card: this})
     @memos.fetch()
 
@@ -16,9 +17,7 @@
     @todos.fetch()
     @set 'created', moment(attrs.created_at)
 
-
   validate: (attrs) ->
-    
     errors = []
     if _.isEmpty(attrs.title)
       errors.push {
@@ -27,9 +26,6 @@
       }
 
     if _.isEmpty(errors) then false else errors
-
-  updateUrl: ->
-    @url += @id if @id and /\/$/.test @url
 })
 
 @Cards = Backbone.Collection.extend({
